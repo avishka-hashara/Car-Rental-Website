@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steeve Rent a Car - Premium Car Rental Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #e94560;
+            --accent-color: #0f3460;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: url('images/hero-bg.avif') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 3rem;
+            animation: fadeInUp 1s ease;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.005);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        /* Fleet Section */
+        .fleet {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .fleet-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .car-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .car-card:hover .car-image img {
+            transform: scale(1.1);
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .car-specs {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .car-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .rent-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rent-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /* Booking Section */
+        .booking {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--white);
+        }
+
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .booking-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #d63850;
+            transform: translateY(-2px);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            opacity: 0.2;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .testimonial-text {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                flex-direction: column;
+                background: var(--primary-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo"><img src="images/logo1.png" alt="Steve Rent a Car"></a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#fleet">Our Fleet</a></li>
+                <li><a href="#booking">Book Now</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Experience Premium Car Rental</h1>
+            <p>Your journey begins with the perfect ride. Choose from our luxury fleet and hit the road in style.</p>
+            <a href="#booking" class="cta-button">Book Your Car Today</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why Choose Steeve Rent a Car?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚗</div>
+                <h3>Premium Fleet</h3>
+                <p>Wide selection of luxury and economy vehicles to match your needs and budget.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Best Prices</h3>
+                <p>Competitive rates with no hidden fees. What you see is what you pay.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock customer service and roadside assistance for your peace of mind.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Easy Booking</h3>
+                <p>Quick and simple online reservation process. Book in minutes, drive in hours.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section class="fleet" id="fleet">
+        <h2 class="section-title">Our Fleet</h2>
+        <div class="fleet-grid">
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="images/economy-car.avif" alt="Economy Class Car">
+                </div>
+                <div class="car-details">
+                    <h3>Economy Class</h3>
+                    <p>Perfect for city driving and daily commutes</p>
+                    <div class="car-specs">
+                        <span>👤 5 Seats</span>
+                        <span>⚙️ Auto</span>
+                        <span>⛽ Hybrid</span>
+                    </div>
+                    <div class="car-price">
+                        <span class="price">LKR 5000/day</span>
+                        <button class="rent-btn">Rent Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="images/img_8195.jpg" alt="Standard Sedan">
+                </div>
+                <div class="car-details">
+                    <h3>Standard Sedan</h3>
+                    <p>Comfortable and reliable for all occasions</p>
+                    <div class="car-specs">
+                        <span>👤 5 Seats</span>
+                        <span>⚙️ Auto</span>
+                        <span>⛽ Petrol</span>
+                    </div>
+                    <div class="car-price">
+                        <span class="price">LKR 6500/day</span>
+                        <button class="rent-btn">Rent Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="images/sport.webp" alt="Luxury Sports Car">
+                </div>
+                <div class="car-details">
+                    <h3>Luxury Sports</h3>
+                    <p>Experience the thrill of premium performance</p>
+                    <div class="car-specs">
+                        <span>👤 2 Seats</span>
+                        <span>⚙️ Auto</span>
+                        <span>⛽ Premium</span>
+                    </div>
+                    <div class="car-price">
+                        <span class="price">LKR 15000/day</span>
+                        <button class="rent-btn">Rent Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="images/000-Best-Family-SUVs.jpg" alt="Family SUV">
+                </div>
+                <div class="car-details">
+                    <h3>Family SUV</h3>
+                    <p>Spacious and safe for family adventures</p>
+                    <div class="car-specs">
+                        <span>👤 7 Seats</span>
+                        <span>⚙️ Auto</span>
+                        <span>⛽ Diesel</span>
+                    </div>
+                    <div class="car-price">
+                        <span class="price">LKR 8500/day</span>
+                        <button class="rent-btn">Rent Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="images/excetive class.webp" alt="Executive Class Car">
+                </div>
+                <div class="car-details">
+                    <h3>Executive Class</h3>
+                    <p>Premium comfort for business travel</p>
+                    <div class="car-specs">
+                        <span>👤 5 Seats</span>
+                        <span>⚙️ Auto</span>
+                        <span>⛽ Hybrid</span>
+                    </div>
+                    <div class="car-price">
+                        <span class="price">LKR 12000/day</span>
+                        <button class="rent-btn">Rent Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="images/truck.jpg" alt="Pickup Truck">
+                </div>
+                <div class="car-details">
+                    <h3>Pickup Truck</h3>
+                    <p>Powerful and versatile for any task</p>
+                    <div class="car-specs">
+                        <span>👤 5 Seats</span>
+                        <span>⚙️ Manual</span>
+                        <span>⛽ Diesel</span>
+                    </div>
+                    <div class="car-price">
+                        <span class="price">LKR 9500/day</span>
+                        <button class="rent-btn">Rent Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking" id="booking">
+        <div class="booking-container">
+            <h2 class="section-title" style="color: white;">Book Your Car</h2>
+            <form class="booking-form" id="bookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickupLocation">Pick-up Location</label>
+                        <input type="text" id="pickupLocation" placeholder="Enter location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dropoffLocation">Drop-off Location</label>
+                        <input type="text" id="dropoffLocation" placeholder="Enter location" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickupDate">Pick-up Date</label>
+                        <input type="date" id="pickupDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dropoffDate">Drop-off Date</label>
+                        <input type="date" id="dropoffDate" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="carType">Car Type</label>
+                        <select id="carType" required>
+                            <option value="">Select car type</option>
+                            <option value="economy">Economy - $45/day</option>
+                            <option value="sedan">Standard Sedan - $65/day</option>
+                            <option value="luxury">Luxury Sports - $150/day</option>
+                            <option value="suv">Family SUV - $85/day</option>
+                            <option value="executive">Executive Class - $120/day</option>
+                            <option value="truck">Pickup Truck - $95/day</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Your name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Complete Booking</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">"Amazing service! The car was in perfect condition and the booking process
+                    was seamless. Will definitely rent from Steeve again!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div class="author-info">
+                        <h4>John Davis</h4>
+                        <p>Business Executive</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">"Great prices and excellent customer support. The SUV was perfect for our
+                    family road trip. Highly recommended!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SM</div>
+                    <div class="author-info">
+                        <h4>Sarah Mitchell</h4>
+                        <p>Teacher</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">"Professional service from start to finish. The luxury sedan was immaculate
+                    and drove like a dream. Five stars!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">RK</div>
+                    <div class="author-info">
+                        <h4>Robert Kim</h4>
+                        <p>Entrepreneur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Steeve Rent a Car</h3>
+                <p>Your trusted partner for premium car rental services. Drive with confidence, travel with style.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#fleet">Our Fleet</a></li>
+                    <li><a href="#booking">Book Now</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Airport Transfer</a></li>
+                    <li><a href="#">Corporate Rental</a></li>
+                    <li><a href="#">Long-term Lease</a></li>
+                    <li><a href="#">Chauffeur Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>📧 info@steeverentacar.com</li>
+                    <li>📞 +1 (555) 123-4567</li>
+                    <li>📍 123 Main Street, City</li>
+                    <li>🕐 24/7 Available</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Steeve Rent a Car. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', function () {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        const bookingForm = document.getElementById('bookingForm');
+        bookingForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const formData = {
+                pickupLocation: document.getElementById('pickupLocation').value,
+                dropoffLocation: document.getElementById('dropoffLocation').value,
+                pickupDate: document.getElementById('pickupDate').value,
+                dropoffDate: document.getElementById('dropoffDate').value,
+                carType: document.getElementById('carType').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value
+            };
+
+            // Show success message
+            alert('Thank you for your booking, ' + formData.name + '! We will contact you shortly at ' + formData.email + ' to confirm your reservation.');
+
+            // Reset form
+            bookingForm.reset();
+        });
+
+        // Rent Now button handlers
+        const rentButtons = document.querySelectorAll('.rent-btn');
+        rentButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const carCard = this.closest('.car-card');
+                const carName = carCard.querySelector('h3').textContent;
+
+                // Scroll to booking form
+                document.getElementById('booking').scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Optional: Pre-select the car type in the form
+                setTimeout(() => {
+                    const carTypeSelect = document.getElementById('carType');
+                    const optionText = carName.toLowerCase();
+
+                    for (let option of carTypeSelect.options) {
+                        if (option.text.toLowerCase().includes(optionText.split(' ')[0])) {
+                            option.selected = true;
+                            break;
+                        }
+                    }
+                }, 500);
+            });
+        });
+
+        // Set minimum date for booking to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('pickupDate').setAttribute('min', today);
+        document.getElementById('dropoffDate').setAttribute('min', today);
+
+        // Update dropoff minimum date when pickup date changes
+        document.getElementById('pickupDate').addEventListener('change', function () {
+            document.getElementById('dropoffDate').setAttribute('min', this.value);
+        });
+    </script>
+</body>
+
+</html>
